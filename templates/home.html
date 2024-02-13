@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <title>#TEST-HOME</title>
+<style>
+
+
+    div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    marquee {
+
+        font-size: 24px; 
+
+      }
+      
+
+</style>
+</head>
+
+
+<body>
+
+
+<marquee>#TEST</marquee>
+<a href="/register" class="btn btn-primary">Register</a>
+</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+<a href="/login" class="btn btn-secondary my-2">Login</a>
+
+</body>
+{% endblock %}
