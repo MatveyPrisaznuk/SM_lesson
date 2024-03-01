@@ -1,9 +1,20 @@
 from flask import Flask, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 import bcrypt
+from flask_mail import Mail,Message
 
+mail = Mail()
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SECRET_KEY'] = 'secret_key'
+app.config["MAIL_SERVER"] = "smtp.fastmail.com"
+app.config["MAIL_PORT"] = 465
+app.config["MAIL_USERNAME"] = "test123543@fastmail.com"
+app.config["MAIL_PASSWORD"] = "tlc2l5j7sdxltxhm"
+app.config["MAIL_USE_TLS"] = False
+app.config["MAIL_USE_SSL"] = True
+mail.init_app(app)
+
 db = SQLAlchemy(app)
 app.secret_key = 'secret_key'
 
@@ -39,6 +50,9 @@ def register():
         new_user = User(name=name, email=email, password=password)
         db.session.add(new_user)
         db.session.commit()
+
+        
+
         return redirect('/login')
 
     return render_template('register.html')
@@ -53,6 +67,10 @@ def login():
 
         if user and user.check_password(password):
             session['email'] = user.email
+            
+            msg = Message('Registration complete', sender='test123543@fastmail.com', recipients=[email])
+            msg.body = f'Hi, {email}! You have successfully registered.'
+            mail.send(msg)
             return redirect('/dashboard')
 
         return redirect('/login')
